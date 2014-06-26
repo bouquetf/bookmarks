@@ -14,19 +14,19 @@ class RepositorySpec extends Specification {
         repository.isEmpty()
     }
 
-    def "Add bookmark to repository should and retrieve it" () {
+    def "Add bookmark to repository and retrieve it" () {
         def title = "a URL"
         def url = "http://myurl.com"
         def repositoryName = "Repository"
         def theBookmark = new Bookmark(title, url)
 
-        setup: "Create a new repository"
+        given: "A new repository and a bookmark"
         def repository = new Repository(repositoryName)
 
-        when: "I add a bookmark to the repository"
+        when: "I add the bookmark to the repository"
         int bookmarkIndex = repository.add(theBookmark)
 
-        then: "the bookmark should be in the repository"
+        then: "the bookmark is added to the repository"
         !repository.isEmpty()
         repository.getSize() == 1
         repository.contains(theBookmark.index)
@@ -46,6 +46,52 @@ class RepositorySpec extends Specification {
         repository.getSize() == 0
         !repository.contains(retrievedBookmark.index)
         !repository.getBookmark(bookmarkIndex)
+    }
+
+    def "Operations on bookmarks"() {
+        given: "A repository and several bookmarks"
+        def b1 = new Bookmark("title1", "url1")
+        def b2 = new Bookmark("title2", "url2")
+        def b3 = new Bookmark("title3", "url3")
+        def repository = new Repository("the repository")
+
+        when: "I add all bookmarks"
+        def bookmarkIndexes = repository.add([b1, b2, b3])
+
+        then: "I should retrieve all indexes"
+        bookmarkIndexes == [b1.index, b2.index, b3.index]
+
+        when: "I remove a bookmark"
+        repository.remove(b2)
+
+        then: "The bookmark should not be accessible in repository anymore"
+        !repository.getBookmark(b2.index)
+    }
+
+    def "Tag a bookmark" () {
+        def aTag = "a tag"
+        def anOtherTag = "an other tag"
+
+        given: "A repository with several bookmarks"
+        def b1 = new Bookmark("title1", "url1")
+        def b2 = new Bookmark("title2", "url2")
+        def b3 = new Bookmark("title3", "url3")
+        def repository = new Repository("the repository")
+
+        repository.add([b1, b2, b3])
+
+        when: "I tag several bookmarks"
+        b2.tag(aTag)
+        b3.tag([aTag, anOtherTag])
+
+        then: "When I search for bookmarks by tag, I should retrieve the tagged bookmarks"
+        def bookmarks = repository.find(aTag)
+        bookmarks.size() == 2
+        bookmarks.containsAll(b2, b3)
+
+        def otherBookmarks = repository.find(anOtherTag)
+        otherBookmarks.size() == 1
+        bookmarks.contains(b3)
     }
 
 }

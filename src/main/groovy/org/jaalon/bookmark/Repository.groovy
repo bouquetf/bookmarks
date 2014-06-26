@@ -21,6 +21,10 @@ class Repository {
         return aBookmark.index
     }
 
+    def add(List<Bookmark> bookmarks) {
+        return bookmarks.collect { add(it) }
+    }
+
     int getSize() {
         bookmarks.size()
     }
@@ -29,11 +33,19 @@ class Repository {
         bookmarks.remove(index)
     }
 
+    def remove(Bookmark bookmark) {
+        bookmarks.remove(bookmark.index)
+    }
+
     Bookmark getBookmark(int index) {
         return bookmarks.get(index) as Bookmark
     }
 
     def contains(int index) {
         return bookmarks.containsKey(index)
+    }
+
+    def find(String tag) {
+        return bookmarks.values().findAll { it.tags.contains(tag) }
     }
 }
