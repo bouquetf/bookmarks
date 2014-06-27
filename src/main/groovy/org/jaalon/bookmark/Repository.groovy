@@ -1,51 +1,26 @@
 package org.jaalon.bookmark
 
-class Repository {
-    def name
-    def bookmarks = [:]
-    def index = 0
+import org.jaalon.bookmark.mem.InMemoryBookmark
 
-    Repository(String name) {
-        this.name = name
-    }
+/**
+ * Created by bouquetf on 27/06/14.
+ */
+public interface Repository {
+    Bookmark getBookmark(int index)
 
-    def isEmpty() {
-        bookmarks.isEmpty()
-    }
+    List<Bookmark> find(String tag)
 
-    def add(Bookmark aBookmark) {
-        index ++
-        aBookmark.index = index
-        bookmarks.put(aBookmark.index, aBookmark)
+    int add(InMemoryBookmark aBookmark)
 
-        return aBookmark.index
-    }
+    List add(List<InMemoryBookmark> bookmarks)
 
-    def add(List<Bookmark> bookmarks) {
-        return bookmarks.collect { add(it) }
-    }
+    Bookmark remove(int index)
 
-    int getSize() {
-        bookmarks.size()
-    }
+    Bookmark remove(InMemoryBookmark bookmark)
 
-    def remove(int index) {
-        bookmarks.remove(index)
-    }
+    int getSize()
 
-    def remove(Bookmark bookmark) {
-        bookmarks.remove(bookmark.index)
-    }
+    boolean isEmpty()
 
-    Bookmark getBookmark(int index) {
-        return bookmarks.get(index) as Bookmark
-    }
-
-    def contains(int index) {
-        return bookmarks.containsKey(index)
-    }
-
-    def find(String tag) {
-        return bookmarks.values().findAll { it.tags.contains(tag) }
-    }
+    boolean contains(int index)
 }

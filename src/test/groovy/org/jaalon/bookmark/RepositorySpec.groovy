@@ -1,5 +1,6 @@
 package org.jaalon.bookmark
-
+import org.jaalon.bookmark.mem.InMemoryBookmark
+import org.jaalon.bookmark.mem.InMemoryRepository
 import spock.lang.Specification
 
 class RepositorySpec extends Specification {
@@ -7,7 +8,7 @@ class RepositorySpec extends Specification {
         def repositoryName = "Repository name"
 
         when: "I create a repository"
-        Repository repository = new Repository(repositoryName);
+        Repository repository = new InMemoryRepository(repositoryName);
 
         then: "The repository should be empty and have a name"
         repository.name == repositoryName
@@ -18,10 +19,10 @@ class RepositorySpec extends Specification {
         def title = "a URL"
         def url = "http://myurl.com"
         def repositoryName = "Repository"
-        def theBookmark = new Bookmark(title, url)
+        Bookmark theBookmark = new InMemoryBookmark(title, url)
 
         given: "A new repository and a bookmark"
-        def repository = new Repository(repositoryName)
+        def repository = new InMemoryRepository(repositoryName)
 
         when: "I add the bookmark to the repository"
         int bookmarkIndex = repository.add(theBookmark)
@@ -50,10 +51,10 @@ class RepositorySpec extends Specification {
 
     def "Operations on bookmarks"() {
         given: "A repository and several bookmarks"
-        def b1 = new Bookmark("title1", "url1")
-        def b2 = new Bookmark("title2", "url2")
-        def b3 = new Bookmark("title3", "url3")
-        def repository = new Repository("the repository")
+        Bookmark b1 = new InMemoryBookmark("title1", "url1")
+        Bookmark b2 = new InMemoryBookmark("title2", "url2")
+        Bookmark b3 = new InMemoryBookmark("title3", "url3")
+        Repository repository = new InMemoryRepository("the repository")
 
         when: "I add all bookmarks"
         def bookmarkIndexes = repository.add([b1, b2, b3])
@@ -73,10 +74,10 @@ class RepositorySpec extends Specification {
         def anOtherTag = "an other tag"
 
         given: "A repository with several bookmarks"
-        def b1 = new Bookmark("title1", "url1")
-        def b2 = new Bookmark("title2", "url2")
-        def b3 = new Bookmark("title3", "url3")
-        def repository = new Repository("the repository")
+        Bookmark b1 = new InMemoryBookmark("title1", "url1")
+        Bookmark b2 = new InMemoryBookmark("title2", "url2")
+        Bookmark b3 = new InMemoryBookmark("title3", "url3")
+        Repository repository = new InMemoryRepository("the repository")
 
         repository.add([b1, b2, b3])
 
