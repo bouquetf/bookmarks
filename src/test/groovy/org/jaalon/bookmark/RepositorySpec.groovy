@@ -1,14 +1,14 @@
 package org.jaalon.bookmark
-import org.jaalon.bookmark.mem.InMemoryBookmark
-import org.jaalon.bookmark.mem.InMemoryRepository
+
+import org.jaalon.bookmark.model.Bookmark
+import org.jaalon.bookmark.model.Repository
 import spock.lang.Specification
 
 class RepositorySpec extends Specification {
     def "Create repository"() {
         def repositoryName = "Repository name"
-
         when: "I create a repository"
-        Repository repository = new InMemoryRepository(repositoryName);
+        Repository repository = new Repository(repositoryName);
 
         then: "The repository should be empty and have a name"
         repository.name == repositoryName
@@ -19,10 +19,10 @@ class RepositorySpec extends Specification {
         def title = "a URL"
         def url = "http://myurl.com"
         def repositoryName = "Repository"
-        Bookmark theBookmark = new InMemoryBookmark(title, url)
+        Bookmark theBookmark = new Bookmark(title, url)
 
         given: "A new repository and a bookmark"
-        def repository = new InMemoryRepository(repositoryName)
+        def repository = new Repository(repositoryName)
 
         when: "I add the bookmark to the repository"
         int bookmarkIndex = repository.add(theBookmark)
@@ -51,10 +51,10 @@ class RepositorySpec extends Specification {
 
     def "Operations on bookmarks"() {
         given: "A repository and several bookmarks"
-        Bookmark b1 = new InMemoryBookmark("title1", "url1")
-        Bookmark b2 = new InMemoryBookmark("title2", "url2")
-        Bookmark b3 = new InMemoryBookmark("title3", "url3")
-        Repository repository = new InMemoryRepository("the repository")
+        Bookmark b1 = new Bookmark("title1", "url1")
+        Bookmark b2 = new Bookmark("title2", "url2")
+        Bookmark b3 = new Bookmark("title3", "url3")
+        Repository repository = new Repository("the repository")
 
         when: "I add all bookmarks"
         def bookmarkIndexes = repository.add([b1, b2, b3])
@@ -74,10 +74,10 @@ class RepositorySpec extends Specification {
         def anOtherTag = "an other tag"
 
         given: "A repository with several bookmarks"
-        Bookmark b1 = new InMemoryBookmark("title1", "url1")
-        Bookmark b2 = new InMemoryBookmark("title2", "url2")
-        Bookmark b3 = new InMemoryBookmark("title3", "url3")
-        Repository repository = new InMemoryRepository("the repository")
+        Bookmark b1 = new Bookmark("title1", "url1")
+        Bookmark b2 = new Bookmark("title2", "url2")
+        Bookmark b3 = new Bookmark("title3", "url3")
+        Repository repository = new Repository("the repository")
 
         repository.add([b1, b2, b3])
 

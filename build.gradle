@@ -1,7 +1,6 @@
 apply plugin: 'idea'
 apply plugin: 'groovy'
 
-sourceCompatibility = 1.5
 version = '1.0'
 
 repositories {
@@ -11,4 +10,12 @@ repositories {
 dependencies {
     groovy 'org.codehaus.groovy:groovy-all:2.1.6'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+}
+
+sourceSets {
+    test {
+        groovy {
+            srcDir('src/test-it/groovy')
+        }
+    }
 }
