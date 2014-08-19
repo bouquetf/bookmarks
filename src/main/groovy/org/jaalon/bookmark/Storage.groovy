@@ -7,4 +7,6 @@ interface Storage {
     def insert(Bookmark bookmark)
 
     Bookmark query(String query)
+
+    def remove(String removalQuery)
 }

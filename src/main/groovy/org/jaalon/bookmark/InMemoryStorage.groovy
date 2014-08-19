@@ -20,4 +20,10 @@ class InMemoryStorage implements Storage {
         def idToFind = Integer.parseInt(query.split(' ')[1])
         return bookmarks.get(idToFind)
     }
+
+    @Override
+    def remove(String removalQuery) {
+        def idToRemove = Integer.parseInt(removalQuery.split(' ')[1])
+        bookmarks.remove(idToRemove)
+    }
 }
