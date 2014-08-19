@@ -4,7 +4,7 @@ import org.jaalon.bookmark.core.Bookmark
  * Created by bouquetf on 19/08/14.
  */
 class InMemoryStorage implements Storage {
-    def bookmarks = [:] // <id, bookmark>
+    def bookmarks = [] // <id, bookmark>
     def tags = [:] // <id, tagName>
     def tagsForBookmarks = [] // <tagId, bookmarkId>
     def bookmarkMaxId = 0l
@@ -14,7 +14,7 @@ class InMemoryStorage implements Storage {
     Long insert(Bookmark bookmark) {
         bookmarkMaxId ++
         bookmark.id = bookmarkMaxId
-        bookmarks.put(bookmarkMaxId, bookmark)
+        bookmarks += [[bookmark.id, bookmark.title, bookmark.url]]
         return bookmark.id
     }
 
@@ -35,24 +35,40 @@ class InMemoryStorage implements Storage {
     @Override
     Bookmark query(String query) {
         def idToFind = Long.parseLong(query.split(' ')[1])
-        return bookmarks.get(idToFind)
+        def rawBookmark = bookmarks.find { row -> row[0] == idToFind }
+
+        if (rawBookmark == null) {
+            return null
+        }
+
+        Bookmark b = new Bookmark()
+        b.id = rawBookmark[0]
+        b.title = rawBookmark[1]
+        b.url = rawBookmark[2]
+        return b
     }
 
     @Override
     List<Bookmark> query(String what, String query) {
         if (query.isEmpty()) {
-            return bookmarks.values().toList()
+            return bookmarks.collect { row ->
+                Bookmark b = new Bookmark()
+                b.id = row[0]
+                b.title = row[1]
+                b.url = row[2]
+                b
+            }
         } else {
             Long tagId = tags.find { it.value == query }.key
             return tagsForBookmarks
                     .findAll { tagsForBookmark -> tagsForBookmark[0] == tagId }
-                    .collect { bookmarks.get(it[1]) }
+                    .collect { this.query("Bookmark ${it[1]}") }
         }
     }
 
     @Override
     def remove(String removalQuery) {
         def idToRemove = Long.parseLong(removalQuery.split(' ')[1])
-        bookmarks.remove(idToRemove)
+        bookmarks.removeAll { row -> row[0] == idToRemove }
     }
 }

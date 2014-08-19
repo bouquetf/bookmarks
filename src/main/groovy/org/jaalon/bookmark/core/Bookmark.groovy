@@ -12,4 +12,25 @@ class Bookmark {
         other.title == this.title &&
         other.url == this.url
     }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
+
+        Bookmark bookmark = (Bookmark) o
+
+        if (id != bookmark.id) return false
+        if (title != bookmark.title) return false
+        if (url != bookmark.url) return false
+
+        return true
+    }
+
+    int hashCode() {
+        int result
+        result = id.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + url.hashCode()
+        return result
+    }
 }

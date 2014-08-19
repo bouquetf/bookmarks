@@ -1,5 +1,9 @@
 - Support Query insert Bookmark <titre> <url>
 - Check si espaces OK dans titre et nom
 - Check des URL mal formées
-- Définir besoins du storage en fonction des use case
-- Storage dans une base de données simple
+- Architecture simple : système centralisé pour backup data, UI pour accès distant aux data
+- Définir besoins du storage central en fonction des use case et storage dans une base de données simple
+- Export (backup) de données
+- Import de données (d'un backup)
+- UI simple
+
