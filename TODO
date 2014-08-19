@@ -1,0 +1,5 @@
+- Support Query insert Bookmark <titre> <url>
+- Check si espaces OK dans titre et nom
+- Check des URL mal formées
+- Définir besoins du storage en fonction des use case
+- Storage dans une base de données simple
