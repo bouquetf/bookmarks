@@ -1,4 +1,6 @@
-package org.jaalon.bookmark
+package org.jaalon.bookmark.core
+
+import org.jaalon.bookmark.storage.Storage
 
 class BookmarkRetriever {
     private Storage storage
@@ -7,7 +9,7 @@ class BookmarkRetriever {
         this.storage = storage
     }
 
-    Bookmark retrieve(def id) {
+    Bookmark retrieve(Long id) {
         return storage.query("Bookmark "+id)
     }
 }

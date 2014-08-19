@@ -1,10 +1,10 @@
-package org.jaalon.bookmark
+package org.jaalon.bookmark.core
 
 /**
  * Created by bouquetf on 19/08/14.
  */
 class Bookmark {
-    def id
+    Long id
     String title
     String url
 

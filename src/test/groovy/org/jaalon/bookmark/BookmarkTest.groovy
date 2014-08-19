@@ -1,30 +1,39 @@
 package org.jaalon.bookmark
 
+import org.jaalon.bookmark.core.Bookmark
+import org.jaalon.bookmark.core.BookmarkAdder
+import org.jaalon.bookmark.core.BookmarkRemover
+import org.jaalon.bookmark.core.BookmarkRetriever
+import org.jaalon.bookmark.storage.InMemoryStorage
+import org.jaalon.bookmark.storage.Storage
+import spock.lang.Shared
 import spock.lang.Specification
 
 class BookmarkTest extends Specification {
-    def "Add a bookmark"() {
-        given: "A memory storage"
-        Storage inMemoryStorage = new InMemoryStorage()
+    @Shared Storage inMemoryStorage = new InMemoryStorage()
+    @Shared BookmarkAdder bookmarkAdder = new BookmarkAdder(inMemoryStorage)
+    @Shared BookmarkRetriever bookmarkRetriever = new BookmarkRetriever(inMemoryStorage)
+    BookmarkRemover bookmarkRemover = new BookmarkRemover(inMemoryStorage)
 
+    def "Bookmark lifecycle"() {
         when: "I add several bookmarks"
-        Bookmark bookmark = new BookmarkAdder(inMemoryStorage).add("title", "http://url.com")
-        Bookmark bookmark2 = new BookmarkAdder(inMemoryStorage).add("title2", "http://url2.com")
+        Bookmark bookmark = bookmarkAdder.add("title", "http://url.com")
+        Bookmark bookmark2 = bookmarkAdder.add("title2", "http://url2.com")
 
         then: "The bookmark are retrieved and corresponding"
-        Bookmark retrievedBookmark = new BookmarkRetriever(inMemoryStorage).retrieve(bookmark.id)
-        Bookmark retrievedBookmark2 = new BookmarkRetriever(inMemoryStorage).retrieve(bookmark2.id)
+        Bookmark retrievedBookmark = bookmarkRetriever.retrieve(bookmark.id)
+        Bookmark retrievedBookmark2 = bookmarkRetriever.retrieve(bookmark2.id)
         retrievedBookmark.correspondsTo(bookmark)
         !retrievedBookmark.correspondsTo(bookmark2)
         retrievedBookmark2.correspondsTo(bookmark2)
         !retrievedBookmark2.correspondsTo(bookmark)
 
         when: "I add and remove a bookmark"
-        Bookmark bookmark3 = new BookmarkAdder(inMemoryStorage).add("title3", "http://url3.com")
-        new BookmarkRemover(inMemoryStorage).remove(bookmark3.id)
+        Bookmark bookmark3 = bookmarkAdder.add("title3", "http://url3.com")
+        bookmarkRemover.remove(bookmark3.id)
 
         then: "It's not found anymore"
-        Bookmark missingBookmark = new BookmarkRetriever(inMemoryStorage).retrieve(bookmark3.id)
+        Bookmark missingBookmark = bookmarkRetriever.retrieve(bookmark3.id)
         missingBookmark == null
     }
 }

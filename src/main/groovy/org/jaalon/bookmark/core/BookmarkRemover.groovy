@@ -1,4 +1,6 @@
-package org.jaalon.bookmark
+package org.jaalon.bookmark.core
+
+import org.jaalon.bookmark.storage.Storage
 
 /**
  * Created by bouquetf on 19/08/14.
