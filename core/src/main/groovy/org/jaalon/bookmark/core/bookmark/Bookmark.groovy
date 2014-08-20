@@ -1,4 +1,4 @@
-package org.jaalon.bookmark.core
+package org.jaalon.bookmark.core.bookmark
 
 /**
  * Created by bouquetf on 19/08/14.

@@ -1,7 +1,24 @@
-- Check des URL mal formées
-- Architecture simple : système centralisé pour backup data, UI pour accès distant aux data
+- Display API REST
+- Packaging minimal API + core
+- BDD basique
+- Packaging de l'application
 - Définir besoins du storage central en fonction des use case et storage dans une base de données simple
 - Export (backup) de données
 - Import de données (d'un backup)
 - UI simple
+- Check des URL mal formées
 
+-----
+Besoins
+packaging :
+- serveur central, exposition API. storage: BDD, display: API
+- appli web. Storage: API, display: web
+- appli lourde, full connectée. Storage: API, display: appli lourde
+- appli navigateur. storage: API, display: navigateur
+
+modules
+  * core
+  * storage
+    * inmemory
+  * display
+  * packagings

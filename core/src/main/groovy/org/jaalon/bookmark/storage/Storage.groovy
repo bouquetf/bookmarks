@@ -1,5 +1,5 @@
 package org.jaalon.bookmark.storage
-import org.jaalon.bookmark.core.Bookmark
+import org.jaalon.bookmark.core.bookmark.Bookmark
 /**
  * Created by bouquetf on 19/08/14.
  */

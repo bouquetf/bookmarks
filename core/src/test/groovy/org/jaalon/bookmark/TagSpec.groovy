@@ -1,8 +1,9 @@
 package org.jaalon.bookmark
-import org.jaalon.bookmark.core.Bookmark
-import org.jaalon.bookmark.core.BookmarkAdder
-import org.jaalon.bookmark.core.BookmarkRetriever
-import org.jaalon.bookmark.storage.InMemoryStorage
+import org.jaalon.bookmark.core.bookmark.Bookmark
+import org.jaalon.bookmark.core.bookmark.BookmarkAdder
+import org.jaalon.bookmark.core.bookmark.BookmarkRetriever
+import org.jaalon.bookmark.core.tag.BookmarkTagger
+import org.jaalon.bookmark.storage.inmemory.InMemoryStorage
 import org.jaalon.bookmark.storage.Storage
 import spock.lang.Shared
 import spock.lang.Specification

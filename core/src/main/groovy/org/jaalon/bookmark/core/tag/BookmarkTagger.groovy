@@ -1,6 +1,6 @@
-package org.jaalon.bookmark
+package org.jaalon.bookmark.core.tag
 
-import org.jaalon.bookmark.core.Bookmark
+import org.jaalon.bookmark.core.bookmark.Bookmark
 import org.jaalon.bookmark.storage.Storage
 
 /**

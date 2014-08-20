@@ -1,5 +1,7 @@
-package org.jaalon.bookmark.storage
-import org.jaalon.bookmark.core.Bookmark
+package org.jaalon.bookmark.storage.inmemory
+import org.jaalon.bookmark.core.bookmark.Bookmark
+import org.jaalon.bookmark.storage.Storage
+
 /**
  * Created by bouquetf on 19/08/14.
  */

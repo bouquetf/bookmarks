@@ -1,4 +1,4 @@
-package org.jaalon.bookmark.core
+package org.jaalon.bookmark.core.bookmark
 
 import org.jaalon.bookmark.storage.Storage
 
