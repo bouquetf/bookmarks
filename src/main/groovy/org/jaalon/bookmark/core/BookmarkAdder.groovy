@@ -16,7 +16,7 @@ class BookmarkAdder {
         Bookmark bookmark = new Bookmark()
         bookmark.title = title
         bookmark.url = url
-        bookmark.id = storage.insert(bookmark)
+        bookmark.id = storage.insert("Bookmark", title, url)
         return bookmark
     }
 }

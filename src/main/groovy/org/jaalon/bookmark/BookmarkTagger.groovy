@@ -14,6 +14,6 @@ class BookmarkTagger {
     }
 
     def tag(Bookmark bookmark, String tag) {
-        storage.insert("Tag $tag $bookmark.id")
+        storage.insert("Tag", tag, bookmark.id.toString())
     }
 }

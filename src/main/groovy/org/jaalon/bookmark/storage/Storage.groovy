@@ -4,8 +4,6 @@ import org.jaalon.bookmark.core.Bookmark
  * Created by bouquetf on 19/08/14.
  */
 interface Storage {
-    Long insert(Bookmark bookmark)
-
     /**
      * Insert an object in database
      * Query syntax: Object [params]
@@ -15,7 +13,7 @@ interface Storage {
      * @param query
      * @return
      */
-    Long insert(String query)
+    Long insert(String query, String ...params)
 
     Bookmark query(String query)
 

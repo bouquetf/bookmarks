@@ -1,5 +1,3 @@
-- Support Query insert Bookmark <titre> <url>
-- Check si espaces OK dans titre et nom
 - Check des URL mal formées
 - Architecture simple : système centralisé pour backup data, UI pour accès distant aux data
 - Définir besoins du storage central en fonction des use case et storage dans une base de données simple

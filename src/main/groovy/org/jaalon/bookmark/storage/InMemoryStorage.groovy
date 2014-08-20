@@ -10,7 +10,6 @@ class InMemoryStorage implements Storage {
     def bookmarkMaxId = 0l
     def tagMaxId = 0l
 
-    @Override
     Long insert(Bookmark bookmark) {
         bookmarkMaxId ++
         bookmark.id = bookmarkMaxId
@@ -19,17 +18,26 @@ class InMemoryStorage implements Storage {
     }
 
     @Override
-    Long insert(String query) {
-        String[] queryStrings = query.split(' ')
-        def tagId = 0l
-        if (tags.values().contains(queryStrings[1])) {
-            tagId = tags.find { it.value == queryStrings[1] }.key
-        } else {
-            tagId = ++ tagMaxId
-            tags.put(tagMaxId, queryStrings[1])
+    Long insert(String what, String ...params) {
+        switch (what) {
+            case 'Bookmark':
+                bookmarkMaxId ++
+                def id = bookmarkMaxId
+                bookmarks += [[id, params[0], params[1]]]
+                return id
+            case 'Tag':
+                def tagId
+                if (tags.values().contains(params[0])) {
+                    tagId = tags.find { it.value == params[0] }.key
+                } else {
+                    tagId = ++ tagMaxId
+                    tags.put(tagMaxId, params[0])
+                }
+                tagsForBookmarks += [[tagId, Long.parseLong(params[1])]]
+                return tagId
+            default:
+                break
         }
-        tagsForBookmarks += [[tagId, Long.parseLong(queryStrings[2])]]
-        return tagId
     }
 
     @Override
