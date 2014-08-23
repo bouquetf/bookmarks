@@ -1,15 +1,18 @@
+- Queries qui retournent des objets typés
+- Storage file (xml ?)
 - Display API REST
 - Packaging minimal API + core
-- BDD basique
 - Packaging de l'application
 - Définir besoins du storage central en fonction des use case et storage dans une base de données simple
 - Export (backup) de données
 - Import de données (d'un backup)
 - UI simple
 - Check des URL mal formées
+- BDD basique
 
 -----
 Besoins
+-----
 packaging :
 - serveur central, exposition API. storage: BDD, display: API
 - appli web. Storage: API, display: web
@@ -22,3 +25,8 @@ modules
     * inmemory
   * display
   * packagings
+
+Storage
+ - Insertion dans plusieurs tables de façon transactionnelle
+ - Query par id
+ - Query par relation sur un autre objet

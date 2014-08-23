@@ -10,7 +10,7 @@ class BookmarkRetriever {
     }
 
     Bookmark retrieve(Long id) {
-        return storage.query("Bookmark "+id)
+        return storage.query("Bookmark ", id)
     }
 
     List<Bookmark> retrieve(String tag) {

@@ -1,23 +1,40 @@
 package org.jaalon.bookmark.storage
-import org.jaalon.bookmark.core.bookmark.Bookmark
-/**
- * Created by bouquetf on 19/08/14.
- */
+
 interface Storage {
     /**
      * Insert an object in database
      * Query syntax: Object [params]
      *
      * Supported:
-     * Tag <tagName> <bookmark>
+     * Bookmark <title> <url>
+     * Tag <tagName> <bookmarkid>
      * @param query
-     * @return
+     * @return inserted Id
      */
     Long insert(String query, String ...params)
 
-    Bookmark query(String query)
+    /**
+     * Query for an object in database by its Id
+     * @param query
+     * @param id
+     * @return
+     */
+    Object query(String query, Long id)
 
-    List<Bookmark> query(String what, String query)
+    /**
+     * Query for an object by a particular query.
+     *
+     * @param what the object to return
+     * @param query the query to execute. Eg. tag
+     * @return
+     */
+    List<Object> query(String what, String query)
 
-    def remove(String removalQuery)
+    /**
+     * Remove an object and its relations from a query.
+     * Eg. "Bookmark <id>" to remove the bookmark marked by this id
+     * @param removalQuery the query
+     * @return
+     */
+    void remove(String removalQuery)
 }

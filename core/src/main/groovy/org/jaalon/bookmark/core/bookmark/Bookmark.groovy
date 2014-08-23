@@ -25,12 +25,4 @@ class Bookmark {
 
         return true
     }
-
-    int hashCode() {
-        int result
-        result = id.hashCode()
-        result = 31 * result + title.hashCode()
-        result = 31 * result + url.hashCode()
-        return result
-    }
 }

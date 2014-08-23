@@ -2,22 +2,12 @@ package org.jaalon.bookmark.storage.inmemory
 import org.jaalon.bookmark.core.bookmark.Bookmark
 import org.jaalon.bookmark.storage.Storage
 
-/**
- * Created by bouquetf on 19/08/14.
- */
 class InMemoryStorage implements Storage {
     def bookmarks = [] // <id, bookmark>
     def tags = [:] // <id, tagName>
     def tagsForBookmarks = [] // <tagId, bookmarkId>
     def bookmarkMaxId = 0l
     def tagMaxId = 0l
-
-    Long insert(Bookmark bookmark) {
-        bookmarkMaxId ++
-        bookmark.id = bookmarkMaxId
-        bookmarks += [[bookmark.id, bookmark.title, bookmark.url]]
-        return bookmark.id
-    }
 
     @Override
     Long insert(String what, String ...params) {
@@ -37,15 +27,12 @@ class InMemoryStorage implements Storage {
                 }
                 tagsForBookmarks += [[tagId, Long.parseLong(params[1])]]
                 return tagId
-            default:
-                break
         }
     }
 
     @Override
-    Bookmark query(String query) {
-        def idToFind = Long.parseLong(query.split(' ')[1])
-        def rawBookmark = bookmarks.find { row -> row[0] == idToFind }
+    Object query(String query, Long id) {
+        def rawBookmark = bookmarks.find { row -> row[0] == id }
 
         if (rawBookmark == null) {
             return null
@@ -59,7 +46,7 @@ class InMemoryStorage implements Storage {
     }
 
     @Override
-    List<Bookmark> query(String what, String query) {
+    List<Object> query(String what, String query) {
         if (query.isEmpty()) {
             return bookmarks.collect { row ->
                 Bookmark b = new Bookmark()
@@ -72,12 +59,12 @@ class InMemoryStorage implements Storage {
             Long tagId = tags.find { it.value == query }.key
             return tagsForBookmarks
                     .findAll { tagsForBookmark -> tagsForBookmark[0] == tagId }
-                    .collect { this.query("Bookmark ${it[1]}") }
+                    .collect { this.query("Bookmark", it[1]) as Bookmark }
         }
     }
 
     @Override
-    def remove(String removalQuery) {
+    void remove(String removalQuery) {
         def idToRemove = Long.parseLong(removalQuery.split(' ')[1])
         bookmarks.removeAll { row -> row[0] == idToRemove }
     }
