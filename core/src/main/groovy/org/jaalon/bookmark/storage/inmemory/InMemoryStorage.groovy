@@ -6,24 +6,21 @@ class InMemoryStorage implements Storage {
     def bookmarks = [] // <id, bookmark>
     def tags = [:] // <id, tagName>
     def tagsForBookmarks = [] // <tagId, bookmarkId>
-    def bookmarkMaxId = 0l
-    def tagMaxId = 0l
 
     @Override
     Long insert(String what, String ...params) {
         switch (what) {
             case 'Bookmark':
-                bookmarkMaxId ++
-                def id = bookmarkMaxId
+                def id = UUID.randomUUID().mostSignificantBits
                 bookmarks += [[id, params[0], params[1]]]
                 return id
             case 'Tag':
-                def tagId
+                Long tagId
                 if (tags.values().contains(params[0])) {
                     tagId = tags.find { it.value == params[0] }.key
                 } else {
-                    tagId = ++ tagMaxId
-                    tags.put(tagMaxId, params[0])
+                    tagId = UUID.randomUUID().mostSignificantBits
+                    tags.put(tagId, params[0])
                 }
                 tagsForBookmarks += [[tagId, Long.parseLong(params[1])]]
                 return tagId
